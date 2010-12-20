@@ -1,0 +1,262 @@
+{% if collection %}            
+      {% if collection.previous_product %}
+         {{ 'Previous Product' | link_to: collection.previous_product }}
+      {% endif %}
+      {% if collection.next_product %}
+        {% if collection.previous_product %} | {% endif %}
+        {{ 'Next Product' | link_to: collection.next_product }}
+      {% endif %}
+   {% endif %}
+
+
+<div id="product">
+
+  <!-- thumbnail display of product's additional views -->
+<div id="pimage-select">
+   {% for image in product.images %}
+     <a href="#" style="background-color:#FFF;" onmouseover="displayImage({{forloop.index }},'product-images')">
+       {{ image | product_img_url: 'thumb' | img_tag }}
+     </a><br/>
+   {% endfor %}
+ </div> 
+
+<!-- Product Image -->
+  <div id="product-images" >
+    {% case product.images.size %}
+  	{% when 1 %}  
+	
+      <div class="pimage">
+        <a href="{{ product.featured_image | product_img_url: 'large' }}" style="background-color:#FFF;" rel="lightbox">{{ product.featured_image | product_img_url: 'medium' | img_tag }}</a>
+        <br/><br/>
+        CLICK TO VIEW LARGER IMAGE   	    
+      </div>
+     
+
+    {% else %}
+
+  	  {% for image in product.images %}
+  	  <div id="pimage-{{forloop.index}}" class="pimage" {% if forloop.first %} {% else %} style="display: none;text-decoration:none;" {% endif %}>
+        <a href="{{ image | product_img_url: 'large' }}" style="background-color:#FFF;" rel="lightbox">{{ image | product_img_url: 'medium' | img_tag }}</a>      
+        <br/><br/>
+        CLICK TO VIEW LARGER IMAGE    	    
+  	  </div>
+  	  {% endfor %}	 	  
+  
+<!--    having numbers for additional views of product  <div id="pimage-select">
+        {% for image in product.images %}
+          <a href="#" onmouseover="displayImage({{ forloop.index }}, 'product-images');">{{ forloop.index }}</a>
+        {% endfor %}
+      </div>-->
+
+
+
+  
+    {% endcase %}
+  </div>
+  
+  
+  
+
+<!--<b>{{ product.title }}</b>-->
+
+<!--<div id="breadcrumb" >
+  <table bgcolor="#D70B6A" cellpadding="4px">
+<tr style="color:#FFF;">
+<td>
+  {% case template %}
+  {% when "product" %}
+    {% if collection %}             
+      {{ collection.title | link_to: collection.url }}
+    {% else %}
+      {{ product.type | link_to_type }}
+    {% endif %}
+  {% when "collection" %}
+    {% assign has_parent = false %} 
+    {% for c in collections %}
+    {% if has_parent == false and collection.handle contains c.handle and c.handle != collection.handle %}
+      {% assign has_parent = true %} 
+      {% assign parent_collection = c %} 
+    {% endif %}
+    {% endfor %} 
+    {% if has_parent == true %}            
+      <span class="seperator">»</span> 
+      {{ parent_collection.title | link_to: parent_collection.url }}
+    {% endif %}
+  {% when "article" %}
+      <span class="seperator">»</span> 
+      {{ blog.title | link_to: blog.url }}
+  {% endcase %}
+  <span class="seperator">»</span>
+  <span class="page-title">{{ page_title | upcase }}</span>
+
+</td>
+</tr>
+</table>
+</div>-->
+
+
+ <div id="productInfo" style="width:400px;z-index:50;margin-left:550px;">
+<div id="breadcrumb" style="padding:30px 0px 8px;color:#000;font-size:27px;">
+  {{ product.title | upcase }}
+
+  <!--<table bgcolor="#D70B6A" cellpadding="4px">
+    <tr style="color:#FFF;">
+    <td >{{ product.title | upcase }}</td>
+  </table>-->
+</div>
+
+<div "designer" style="font-size:20px;padding-bottom:5px;"><a href="/collections/{{product.vendor}}">{{product.vendor}}</a></div>
+
+<div class="money" id="price">{% if product.price_varies %} <del style="color:#dadada;font-size:12px;"> {{ product.price_max | money }}</del><br/>{{ product.price_min | money }} {%else%}{{ product.price_min | money }}{% endif %}</div>
+
+ <!--<ul id="details" class="hlist" style="padding:0px;background-color:#dadada;">
+    <li>Designer: {{product.vendor | link_to_vendor }}</li>
+    <li>Type: {{product.type | link_to_type }}</li>
+  </ul>-->
+
+  <div id="description" class="textile">
+    {{ product.description }}
+  </div>
+  
+  
+  
+	<form  action="/cart/add" method="post">
+    <select id="variants" name='id'>
+<!--<option>{{product.options}} / </option>-->
+      {% for variant in product.variants %}
+        <option value="{{ variant.id }}">{{ variant.title }} {% if {{variant.available}} %}  {% else %} - SOLD OUT {% endif %} </option> 
+      {% endfor %}
+    </select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'View Size Chart' | link_to: 'http://www.the-king-of-games.com/english/shop/main/shop_info/size_chart.gif' }}
+    
+
+    <div id="purchase">
+{% if product.available %}
+	<input type="submit" name="add" value="ADD TO SHOPPING BAG" id="add" class="primary clearfix" style="color:#FFF; cursor:pointer; padding:5px;font-size:12px; background-color:#000; border: 1.5px solid #111111;"/>
+        
+{% else %}
+	{% case product.variants.first.inventory_quantity %}
+		{% when 0 %}
+                  <input type="submit" name="add" value="SOLD OUT!" id="add" class="primary clearfix" style="color:#f7f5f5; padding:5px;font-size:14px; background-color:#969696; border: 1.5px solid #111111;"/>
+		{% when -1 %}<input type="submit" name="add" value="BACKORDER" id="add" class="primary clearfix" style="color:#f7f5f5; padding:5px;font-size:14px; background-color:#969696; border: 1.5px solid #111111;"/>
+		{% when -2 %}Discontinued
+		... ETC ...
+	{% endcase %}
+{% endif %}
+    
+    </div>
+  </form>
+  
+   <!-- AddThis Button BEGIN 
+<div class="addthis_toolbox addthis_default_style">
+<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4c5c64dd17f2ca5a" class="addthis_button_compact">Share</a>
+</div>
+
+ AddThis Button END -->
+
+
+
+
+<div class="addthis_toolbox">
+    <div class="custom_hover">
+        <span class="custom_button">+ SHARE THIS</span>
+<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.kumarii.com&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+    </div>
+    <div class="hover_menu">
+        <div class="column1">
+            <!--<a class="addthis_button_email">Email</a>-->
+        </div>
+        <div class="column2">
+           <!-- <a class="addthis_button_print">Print</a>-->
+        </div>
+        <div class="clear"></div>
+        <div class="top"></div>
+        <div class="column1">
+            <a class="addthis_button_twitter">Twitter</a>
+            <a class="addthis_button_facebook">Facebook</a>
+            <a class="addthis_button_delicious">Delicous</a>
+            <!--<a class="addthis_button_myspace">MySpace</a>
+        </div>
+        <div class="column2">
+            <a class="addthis_button_delicious">Delicous</a>
+            <a class="addthis_button_stumbleupon">Stumble</a>
+            <a class="addthis_button_digg">Digg</a>
+        </div>
+        <div class="clear"></div>
+        <div class="more">
+            <a class="addthis_button_expanded">More...</a>
+        </div>-->
+    </div>
+</div>  
+
+
+
+
+
+   <div style="padding-bottom:50px;">
+   <li>> {{product.type | link_to_type }}</li>
+   <li>> <a href="/collections/{{product.vendor}}">{{product.vendor}}</a> </li>
+   </div>
+
+</div> <!-- ending product info div -->
+
+
+
+
+
+
+</div>
+
+<!--<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c5c64dd17f2ca5a"></script>-->
+
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=YOUR-ACCOUNT-ID"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script type="text/javascript">
+$(function() {
+    var delay = 400;
+    
+    function hideMenu() {
+        if (!$('.custom_button').data('in') && !$('.hover_menu').data('in') && !$('.hover_menu').data('hidden')) {
+            $('.hover_menu').fadeOut('fast');
+            $('.custom_button').removeClass('active');
+            $('.hover_menu').data('hidden', true);
+        }
+    }
+    
+    $('.custom_button, .hover_menu').mouseenter(function() {
+        $('.hover_menu').fadeIn('fast');
+        $('.custom_button').addClass('active');
+        $(this).data('in', true);
+        $('.hover_menu').data('hidden', false);
+    }).mouseleave(function() {
+        $(this).data('in', false);
+        setTimeout(hideMenu, delay);
+    });    
+    
+});
+</script>
+
+
+<script type="text/javascript">
+// <![CDATA[  
+  // prototype callback for multi variants dropdown selector
+  var selectCallback = function(variant, selector) {
+    if (variant && variant.available == true) {
+      // selected a valid variant
+      $('add').disabled = false;           // reenable add-to-cart button
+      $('price-field').innerHTML = Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}");  // update price field
+    } else {
+      // variant doesn't exist
+      $('add').disabled = true;             // disable add-to-cart button      
+      $('price-field').innerHTML = (variant) ? "Sold Out" : "Unavailable"; // update price-field message
+    }
+  };
+
+  // initialize multi selector for product
+  Event.observe(document, 'dom:loaded', function() {  
+    new Shopify.OptionSelectors("variants", { product: {{ product | json }}, onVariantSelected: selectCallback }); 
+  });
+// ]]>
+</script>
+
+

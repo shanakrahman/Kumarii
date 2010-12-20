@@ -1,0 +1,86 @@
+<script type="text/javascript">
+  function remove_item(id) {
+      document.getElementById('updates_'+id).value = 0;
+      document.getElementById('cartform').submit();
+  }
+</script>
+
+<div>
+
+  {% if cart.item_count == 0 %} 
+    <p>Your shopping bag is empty...</p>
+  {% else %}
+  <form action="/cart" method="post" id="cartform">
+    <!--<div class="info">
+
+        <input type="submit" value="Continue to checkout" name="checkout" class="primary" /> &raquo;
+
+    </div>-->
+
+  <div id="cart">
+  
+  <table bgcolor="#D70B6A" cellpadding="4px">
+    <tr style="color:#FFF;">
+    <td>SHOPPING BAG</td>
+  </table>
+
+
+  <table align="center" width="985px" >
+    <tr style="text-align:center;"><td colspan="2">ITEM</td><td>PRICE</td><td>QTY</td><td>DELETE</td></tr>
+{% for item in cart.items %}
+    <tr bgcolor="#FFFFFF"  onMouseOver="this.borderColor='#dadada'" onMouseOut="this.borderColor='#FFFFFF'">  
+      <td >
+        <div class="c-thumb">
+          <a href="{{item.product.url}}" title=""><img src="{{item.product.featured_image | product_img_url: 'thumb' | imag_tag }}" alt="{{item.title | escape }}" title="{{item.title | escape }}" /></a>
+        </div>
+      </td>
+      <td> {{ item.title }}</td>
+      <td style="text-align:center;"><span class="money">{{ item.price | money}} each.</span></td>
+      <td style="text-align:center;"><input type="text" size="4" name="updates[{{item.variant.id}}]" id="updates_{{item.variant.id}}" value="{{item.quantity}}" onfocus="this.select();"/></td>
+      <td style="text-align:center;"><a href="#" onclick="remove_item({{item.variant.id}}); return false;" class="remove">REMOVE</a></td>
+    </tr>
+{% endfor %}
+  </table>
+<!--
+    <ul id="line-items">
+      {% for item in cart.items %}
+      <li id="item-{{item.id}}" class="clearfix">
+        <div class="c-thumb">
+          <img src="{{item.product.featured_image | product_img_url: 'thumb' }}" alt="{{item.title | escape }}" title="{{item.title | escape }}" />
+        </div>
+        <h3>{{ item.title }}</h3>
+        <span class="money">{{ item.price | money}} each.</span>
+        <p class="right">
+          <label for="updates_{{item.variant.id}}">How many do you want? </label> 
+          <input type="text" size="4" name="updates[{{item.variant.id}}]" id="updates_{{item.variant.id}}" value="{{item.quantity}}" onfocus="this.select();"/><br />
+          <a href="#" onclick="remove_item({{item.variant.id}}); return false;" class="remove">(remove this item)</a>
+        </p>
+      </li>
+      {% endfor %}
+
+-->
+      <li id="total" style="padding:10px;background:none;">
+        Subtotal: 
+        <span class="money">{{ cart.total_price | money_with_currency }}</span>
+      </li>
+      <li id="bottom-cart-functions">
+        <input type="submit" value="CHECKOUT" name="checkout" class="primary" style="float: right; color:#FFF; border:none;padding:10px;background-color:#000;" />
+
+        <input type="submit" id="update-cart" name="update" value="UPDATE MY CART" style="float: right; color:#FFF; border:none;padding:10px;background-color:#000;"  />
+      </li>
+
+      {% if additional_checkout_buttons %}
+      <li id="additional-checkout-buttons">
+        <br/><br/>
+        {{ content_for_additional_checkout_buttons }}
+      </li>
+      {% endif %}              
+    </ul>
+
+
+  </div>
+  </form>
+
+  {% endif %}
+
+</div>

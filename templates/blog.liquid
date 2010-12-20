@@ -1,0 +1,29 @@
+<div style="color:#000;font-size:15px;">{{page.title}}</div>
+
+{% paginate blog.articles by 20 %}
+
+  {% for article in blog.articles  %}
+
+      <h3 class="blog">
+        <a href="{{article.url}}">{{ article.title }}</a>
+      </h3>
+      <p class="posted"> {{ article.created_at | date: "%B, %Y" |upcase }} | {{ article.author | upcase}}
+        {% if blog.comments_enabled? %}
+          &mdash;
+          <a href="{{article.url}}#comments">{{ article.comments_count }} comments</a>
+        {% endif %}  
+      </p>
+      <div class="article-body-truncated textile">
+        {{ article.content }}
+      </div>    
+  
+  {% endfor %}
+  
+  
+  {% if paginate.pages > 1 %}
+    <div id="pagination" class="info" style="margin-top: 20px">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+
+{% endpaginate %}

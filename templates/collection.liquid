@@ -1,0 +1,158 @@
+<!--{% paginate collection.products by 20 %}
+
+  <ul id="productsv">
+    {% for product in collection.products %}
+      <li class="productv clearfix">
+        <div class="thumb">
+          <a href="{{product.url}}">{{ product.featured_image | product_img_url: 'small' | img_tag }}</a>
+          <p class="money">{{ product.price_min | money }}{% if product.price_varies %} - {{ product.price_max | money }}{% endif %}</p>
+        </div>
+        <div class="pbody">
+          <h3><a href="{{product.url}}">{{product.title}}</a></h3>
+          {{ product.description | strip_html | truncatewords: 50 }}
+          <ul class="buttons clearfix">
+            <li><a href="{{ product.url }}" title="View Details">View Details</a></li>
+          </ul>
+       </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if paginate.pages > 1 %}
+    <div id="pagination" class="info">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+
+{% endpaginate %}
+-->
+
+
+  <!--<div style="padding:15px 5px 5px 41px;"><b><a href="{{page.url}}" style="color:#000;font-size:15px;padding:5px 0 5px;">{{page.title | upcase}}</a></b></div>
+  <ul>
+   {% assign myvariable = {{page.handle}} %}
+   {% for link in linklists.[myvariable].links %}
+     <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+   {% endfor %}
+  </ul>-->
+
+<div id="sideNav" style="width:200px; height:580px; font-size:12.25px; position:absolute; z-index:5;">
+
+       {% case collection.title %} 
+
+
+         {% when 'SCARVES + SHAWLS' %}
+          <div style="color:#D70B6A;padding:15px 5px 5px 41px;font-size:15px;padding-bottom:5px;"><b>BAZAAR</b></div>
+           <ul>
+            {% for link in linklists.bazaar.links %}
+
+              {%if link.title contains collection.title%}
+                  <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url}}</li></div>
+   
+                  {% for tag in collection.all_tags %} 
+                     <div style="padding-left:9px;"><li>- {{ tag | highlight_active_tag | link_to_tag: tag }}</li></div>
+                  {% endfor %}
+
+              {%else%}
+                  <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+              {%endif%}
+
+            {% endfor %}
+            </ul>
+
+
+         {% when 'JEWELRY' %}
+           <div style="color:#D70B6A;padding:15px 5px 5px 41px;font-size:15px;padding-bottom:5px;"><b>BAZAAR</b></div>
+           <ul>
+            {% for link in linklists.bazaar.links %}
+
+              {%if link.title contains collection.title%}
+                  <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url}}</li></div>
+   
+                  {% for tag in collection.all_tags %} 
+                     <div style="padding-left:9px;"><li>- {{ tag | highlight_active_tag | link_to_tag: tag }}</li></div>
+                  {% endfor %}
+
+              {%else%}
+                  <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+              {%endif%}
+
+            {% endfor %}
+            </ul>
+          {% when 'NEW THIS SEASON' %}
+           <div style="color:#D70B6A;padding:15px 5px 5px 41px;font-size:15px;padding-bottom:5px;"><b>NEW THIS SEASON</b></div>
+            <ul>
+           {% for tag in collection.all_tags %} 
+             <div style="padding-left:9px;"><li>- {{ tag | highlight_active_tag | link_to_tag: tag }}</li></div>
+           {% endfor %}
+            </ul>
+         {% when 'Prada' %}
+           <ul>
+           <div style="color:#D70B6A;font-size:15px;padding-bottom:5px;"><b>PRADA</b></div>
+           {% for tag in collection.all_tags %} 
+             <div style="padding-left:9px;"><li>- {{ tag | highlight_active_tag | link_to_tag: tag }}</li></div>
+           {% endfor %}
+            </ul>
+         {% when 'Gucci' %}
+           <ul>
+           <div style="color:#D70B6A;font-size:15px;padding-bottom:5px;"><b>GUCCI</b></div>
+           {% for tag in collection.all_tags %} 
+             <div style="padding-left:9px;"><li>- {{ tag | highlight_active_tag | link_to_tag: tag }}</li></div>
+           {% endfor %}
+            </ul>
+       {% endcase %}
+
+
+
+
+
+{% assign counter = 0 %}
+
+{% capture list %}
+{% for c in collections %}
+  {% if c.handle contains collection.handle and c.handle != collection.handle %}
+    <li><a href="{{ c.url }}" title="{{ c.title }}">{{ c.title }}</a></li>
+    {% capture temp %}{{ counter | plus: 1 }}{% endcapture %}
+    {% assign counter = temp %}
+  {% endif %}
+{% endfor %}
+{% endcapture %}
+
+{% unless counter == 0 %}
+<ul>
+{{ list }}
+</ul>
+{% endunless %}
+
+</div>
+<!--{{ if current_page == 1 }} 
+
+{{else}}-->
+
+
+
+<div class="coll-desc" style="margin:10px 0px 0px 210px; width:775px;">{{collection.description}}</div>
+{% paginate collection.products by 1000 %}
+
+<table id="products" cellspacing="0" cellpadding="0" style="margin-left:198px;width:800px;">
+
+<!-- Num of cols to display entire catalog -->
+  {% tablerow product in collection.products cols:3  %}
+  <div class="product" >
+    <div class="product-image"><a href="{{product.url}}"><img src="{{ product.featured_image | product_img_url: 'medium' }}" alt="{{ product.title }}"/></a></div>
+      <a href="{{product.url}}"><b>{{product.title}}</b></a>
+
+    <div "designer"><a href="/collections/{{product.vendor}}">{{product.vendor}}</a></div>
+
+    <div class="money" >{{ product.price | money }}</div>
+    
+  </div>
+  {% endtablerow %}
+</table>
+
+<div id="pagination" class="clear"> {{ paginate | default_pagination }} </div>
+{% endpaginate %}
+
+<!--{{endif}}-->
+
+

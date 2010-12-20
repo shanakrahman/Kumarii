@@ -1,0 +1,44 @@
+<div id="sideNav" style="width:200px; height:580px; font-size:12.25px; position:absolute; z-index:5;">
+
+  <div style="padding:15px 5px 5px 41px;"><b><a href="{{page.url}}" style="color:#000;font-size:15px;padding:5px 0 5px;">{{page.title | upcase}}</a></b></div>
+  <ul>
+   {% assign myvariable = {{page.handle}} %}
+   {% for link in linklists.[myvariable].links %}
+     <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+   {% endfor %}
+  </ul>
+<!--
+        {% if page.title == 'BAZAAR' %}
+            <ul>
+<div style="color:#D70B6A;font-size:15px;padding-bottom:5px;"><b>BAZAAR</b></div>
+            {% for link in linklists.bazaar.links %}
+                <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+            {% endfor %}
+            </ul>
+        
+        {% elsif page.handle == 'brandboutique' %}
+            <ul>
+            <div style="color:#D70B6A;font-size:15px;padding-bottom:5px;"><b>BRAND BOUTIQUE</b></div>
+            {% for link in linklists.brand-boutique.links %}
+                <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+            {% endfor %}
+            </ul>
+ 
+        {% elsif page.title == 'MARKETPLACE' %}
+            <ul>
+<div style="color:#D70B6A;font-size:15px;padding-bottom:5px;"><b>MARKETPLACE</b></div>
+            {% for link in linklists.marketplace.links %}
+                <div style="padding:5px 0 5px 0;"><li>{{ link.title | link_to: link.url }}</li></div>
+            {% endfor %}
+            </ul>
+        
+        {% endif %}
+-->
+
+</div>
+
+
+<div class="article-body textile" style="padding: 10px 0px 0px 210px;">
+  {{ page.content }}
+</div>
+

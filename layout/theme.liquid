@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>{{shop.name}} - {{page_title}}</title>
+	
+  {{ 'textile.css'  | global_asset_url | stylesheet_tag }}
+  {{ 'lightbox/v204/lightbox.css'      | global_asset_url | stylesheet_tag }}
+  {{ 'shop.css'     | asset_url        | stylesheet_tag }}
+  
+  {{ 'prototype/1.6/prototype.js'           | global_asset_url  | script_tag }}
+  {{ 'scriptaculous/1.8.2/scriptaculous.js' | global_asset_url  | script_tag }}
+  {{ 'lightbox/v204/lightbox.js' | global_asset_url  | script_tag }}	
+  {{ 'shop.js'                   | asset_url         | script_tag }}
+  {{ 'option_selection.js'       | shopify_asset_url | script_tag }}
+
+  {{ content_for_header }}
+
+  {{ 'hoverIntent.js' | asset_url | script_tag }}
+{{ 'jquery.bgiframe.min.js' | asset_url | script_tag }}
+{{ 'superfish.js' | asset_url | script_tag }}
+{{ 'supersubs.js' | asset_url | script_tag }}
+
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+jQuery(function() {
+  jQuery('ul.sf-menu').superfish({
+    animation: { height: 'show' }, // slide-down animation
+    speed: 'fast' // faster animation speed
+  });
+});
+//]]>
+
+//initialize superfish
+$(document).ready(function(){ 
+$('ul.sf-menu').superfish();
+
+
+        $("ul.sf-menu").supersubs({ 
+            minWidth:    12,   // minimum width of sub-menus in em units 
+            maxWidth:    27,   // maximum width of sub-menus in em units 
+            extraWidth:  1     // extra width can ensure lines don't sometimes turn over 
+                               // due to slight rounding differences and font-family 
+        }).superfish();  // call supersubs first, then superfish, so that subs are 
+                         // not display:none when measuring. Call before initialising 
+                         // containing tabs for same reason. 
+    }); 
+$("ul.sf-menu").superfish().find('ul').bgIframe({opacity:false}); 
+</script>
+
+
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+function theRotator() {
+	//Set the opacity of all images to 0
+	$('div#rotator ul li').css({opacity: 0.0});
+	
+	//Get the first image and display it (gets set to full opacity)
+	$('div#rotator ul li:first').css({opacity: 1.0});
+		
+	//Call the rotator function to run the slideshow, 6000 = change to next image after 6 seconds
+	setInterval('rotate()',6000);
+	
+}
+
+function rotate() {	
+	//Get the first image
+	var current = ($('div#rotator ul li.show')?  $('div#rotator ul li.show') : $('div#rotator ul li:first'));
+
+	//Get next image, when it reaches the end, rotate it back to the first image
+	var next = ((current.next().length) ? ((current.next().hasClass('show')) ? $('div#rotator ul li:first') :current.next()) : $('div#rotator ul li:first'));	
+	
+	//Set the fade in effect for the next image, the show class has higher z-index
+	next.css({opacity: 0.0})
+	.addClass('show')
+	.animate({opacity: 1.0}, 1000);
+
+	//Hide the current image
+	current.animate({opacity: 0.0}, 1000)
+	.removeClass('show');
+	
+};
+
+$(document).ready(function() {		
+	//Load the slideshow
+	theRotator();
+});
+</script>
+
+
+
+
+
+
+
+</head>
+
+<body id="page-{{template}}">
+  <!-- begin div.container -->
+  <div id="container">
+    
+		
+
+    <!-- begin div.header <div id="header">-->
+
+	
+      <!--<h1><a href="/">{{shop.name}}</a><img src="http://cdn.shopify.com/s/files/1/0040/1862/files/webLogo.jpg?1266895996" style="padding-left:200px;position:absolute;"/></h1>-->
+
+<!-- Side Paisley Image 
+<img src="http://cdn.shopify.com/s/files/1/0040/1862/files/sidePaisley.png?1279675420" style="position:absolute;left:0px;z-index:1;">
+-->
+<a href="/"><img src="http://cdn.shopify.com/s/files/1/0040/1862/files/Logo.jpg?1285794772" style="left:210px;position:absolute;padding-top:10px;"/></a>
+      <!-- could have a tagline: 
+  		<p id="subtitle">We sell cool crazy stuff&hellip;</p>-->
+	
+    <!-- </div> /end div.header -->
+    
+
+
+    <!-- begin div.in-cart -->
+    <div id="in-cart">
+	
+      {% if cart.item_count == 0 %}
+        <div id="cart-count"><br/><br/>FOLLOW US HERE &nbsp;<a href="http://www.facebook.com/pages/Kumarii/306987009091?ref=ts" ><img src="http://cdn.shopify.com/s/files/1/0040/1862/files/fb-icon_pico.png?1280949572" /></a> &nbsp;&nbsp;<a href="http://twitter.com/kumariionline" ><img src="http://cdn.shopify.com/s/files/1/0040/1862/files/tw-icon_pico.png?1280949572" /></a> <br/><br/>Shopping Bag [0 items] <br/> Receive Email Updates <br/> <a style="color:#000;" href="/pages/customer-service">Customer Service</a> </div>
+      {% else %}
+<div id="cart-count"><br/><br/>FOLLOW US HERE &nbsp;<a href="http://www.facebook.com/pages/Kumarii/306987009091?ref=ts" ><img src="http://cdn.shopify.com/s/files/1/0040/1862/files/fb-icon_pico.png?1280949572" /></a> &nbsp;&nbsp;<a href="http://twitter.com/kumariionline" ><img src="http://cdn.shopify.com/s/files/1/0040/1862/files/tw-icon_pico.png?1280949572" /></a> <br/><br/>Shopping Bag <a href="/cart">[{{ cart.item_count }} {{cart.item_count | pluralize: 'item', 'items'}}]</a> | Receive Email Updates | <a style="color:#000;" href="/pages/customer-service">Customer Service</a> </div>
+      {% endif %}
+	
+
+	<!--<form action="/search" method="get">-->
+	        <!--<label for="q">Search:</label>-->
+	       <!--<input type="text" id="q" name="q" class="searchfield" value="search" style="color:#929193; background-color:#f8f8f8; border: 1.5px solid #dddddd; width:282px; height:14px;"/>
+	        <input type="submit" value=">" style="color:#929193; background-color:#f8f8f8; border: 1.5px solid #dddddd;" />
+	</form>-->
+
+    </div>
+    <!-- /end div.in-cart -->
+    
+    
+    <!-- begin div.content -->
+    <div id="content">
+      
+      <!-- begin div.main-->
+<!--<img src="http://cdn.shopify.com/s/files/1/0040/1862/files/sidePaisley.png?1279675420" style="position:absolute;z-index:1;">-->
+
+
+
+
+
+
+
+
+<ul id="mainMenu" class="sf-menu">
+
+  {% for link in linklists.main-menu.links %}
+
+<!-- does this link in our iteration point to the current page? -->
+{% assign current = false %}{% if template == 'index' and link.url == '/' %}{% assign current = true %}{% elsif collection.url == link.url %}{% assign current = true %}{% elsif blog.url == link.url %}{% assign current = true %}{% elsif page.url == link.url %}{% assign current = true %}{% elsif page_title == link.title %}{% assign current = true %}{% elsif template == 'list-collections' and link.url == '/collections' %}{% assign current = true %}{% elsif page_title == 'Products' and link.url == '/collections/all' %}{% assign current = true %}{% elsif template == 'article' and link.url == article.url %}{% assign current = true %}{% endif %}
+<!-- end of soul-searching about active class -->
+
+  <li{% if forloop.first %} class="first"{% endif %}>
+    <a{% if current %} class="active"{% endif %} href="{{ link.url }}">{{ link.title }}</a>
+    {% capture child_list_handle %}{{ link.title | handle }}{% endcapture %}
+    {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+    <ul>
+      {% for l in linklists[child_list_handle].links %}
+      <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </li>
+ 
+  {% endfor %}
+  <form action="/search" method="get" style="padding:6px 0px 0px 0px;float:right;">
+	        <input type="text" id="q" name="q" class="searchfield" value="search" style="color:#929193; margin-right:7px;background-color:#f8f8f8; width:145px; "/>
+	        <input type="submit" value=">" style="color:#929193; text-align:center;height:16px;border:none; margin-top:1px; background-color:#f8f8f8;" />
+	</form>
+</ul>
+
+
+
+
+
+
+
+<!-- -------------------------------------------------------------->
+      <div id="main">
+	
+        {{ content_for_layout }}
+
+      </div>
+      <!-- /end div.main -->      
+      
+      
+    </div>
+    <!-- /end div.content -->
+    
+    
+    <!-- begin div.footer -->
+    <div id="footer" >
+ 	  <ul>
+        {% for link in linklists.footer.links %}
+           <li>{{ link.title | link_to: link.url }}</li>
+        {% endfor %}
+      </ul> 
+ 
+    <div id="shopify">
+   &copy; 2010 Kumarii Group, Inc. All Rights Reserved | Terms of Service | Privacy Policy
+  </div>
+ </div>
+    <!-- /end div.footer -->
+  </div>
+  
+
+  </div><!-- /end div.container -->
+</body>
+</html>
