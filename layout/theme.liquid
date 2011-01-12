@@ -154,17 +154,30 @@ $(document).ready(function() {
 
 
 
-
-
-
-
 <ul id="mainMenu" class="sf-menu">
 
   {% for link in linklists.main-menu.links %}
 
-<!-- does this link in our iteration point to the current page? -->
-{% assign current = false %}{% if template == 'index' and link.url == '/' %}{% assign current = true %}{% elsif collection.url == link.url %}{% assign current = true %}{% elsif blog.url == link.url %}{% assign current = true %}{% elsif page.url == link.url %}{% assign current = true %}{% elsif page_title == link.title %}{% assign current = true %}{% elsif template == 'list-collections' and link.url == '/collections' %}{% assign current = true %}{% elsif page_title == 'Products' and link.url == '/collections/all' %}{% assign current = true %}{% elsif template == 'article' and link.url == article.url %}{% assign current = true %}{% endif %}
-<!-- end of soul-searching about active class -->
+    <!-- does this link in our iteration point to the current page? -->
+    {% assign current = false %}
+    {% if template == 'index' and link.url == '/' %}
+        {% assign current = true %}
+    {% elsif collection.url == link.url %}
+        {% assign current = true %}
+    {% elsif blog.url == link.url %}
+        {% assign current = true %}
+    {% elsif page.url == link.url %}
+        {% assign current = true %}
+    {% elsif page_title == link.title %}
+        {% assign current = true %}
+    {% elsif template == 'list-collections' and link.url == '/collections' %}
+        {% assign current = true %}
+    {% elsif page_title == 'Products' and link.url == '/collections/all' %}
+        {% assign current = true %}
+    {% elsif template == 'article' and link.url == article.url %}
+        {% assign current = true %}
+    {% endif %}
+    <!-- end of soul-searching about active class -->
 
   <li{% if forloop.first %} class="first"{% endif %}>
     <a{% if current %} class="active"{% endif %} href="{{ link.url }}">{{ link.title }}</a>
@@ -172,22 +185,19 @@ $(document).ready(function() {
     {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
     <ul>
       {% for l in linklists[child_list_handle].links %}
-      <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+          <li><a href="{{ l.url }}">{{ l.title }}</a></li>
       {% endfor %}
     </ul>
     {% endif %}
   </li>
  
   {% endfor %}
+  
   <form action="/search" method="get" style="padding:6px 0px 0px 0px;float:right;">
 	        <input type="text" id="q" name="q" class="searchfield" value="search" style="color:#929193; margin-right:7px;background-color:#f8f8f8; width:145px; "/>
 	        <input type="submit" value=">" style="color:#929193; text-align:center;height:16px;border:none; margin-top:1px; background-color:#f8f8f8;" />
 	</form>
 </ul>
-
-
-
-
 
 
 
