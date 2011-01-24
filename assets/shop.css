@@ -27,13 +27,19 @@ Comes in a few different colour variations (see section 8).
 
 ---------------------------------------------------------------------------- */
 
+	div#banner {
+		position:relative;
+		height:350px;
+		width:1000px;
+}
 
 /*index js image rotator*/
 /* rotator in-page placement */
     div#rotator {
 	position:relative;
         left:0px;
-	height:480px;
+	height:350px;
+	width:600px;
 }
 /* rotator css */
 	div#rotator ul li {
@@ -44,12 +50,24 @@ Comes in a few different colour variations (see section 8).
 /* rotator image style */	
 	div#rotator ul li img {
 	background: #FFF;
+	width:600px;
+	height:350px;
 }
     div#rotator ul li.show {
 
 }
 
-
+	div#right-banner {
+		position: relative;
+		height: 350px;
+		width: 200px;
+}
+	
+	div#right-banner img {
+		float: left;
+		width: 200px;
+		height: 350px;
+	}
 
 /* 1: BODY AND UNIVERSAL RESET
 ============================================================================ */
@@ -174,7 +192,7 @@ margin-top:100px;
   	font-size: 11px;
 	color: #838383;
   	text-align: center;
-padding-left:400px;
+padding-left:250px;
 	}
 
 #footer ul {
@@ -502,7 +520,7 @@ li#total .money {font-size: 20px;}
 line-height:130%;
 	position: static;
 	height: 13px;
-        margin-left:1035px;
+        margin-left:840px;
   	padding: 5px 14px 28px;
 	/*border: 1px solid #5e8ba6;
 	background: #6b9fbd;
@@ -591,7 +609,7 @@ ul.hlist {list-style: none;}
 
 #shopify {
         float:left;
-        padding-left:120px;
+        padding-left:60px;
 	text-align: center;
 	font-size: 85%;
 	margin-bottom: 5px;
