@@ -1,8 +1,6 @@
 <!-- insert the image URl in between the quotation marks, ex: <img src="INSERT IMAGE URL HERE"/> -->
 
-<div id="banner">
-
-<div id="rotator" style="left:-40px;top:-12px;z-index:50;">
+<div id="rotator" style="top:-12px;z-index:50;">
   <ul>
     
     <li class="show">
@@ -26,14 +24,20 @@
   </ul>
 </div>
 
-<!-- <div id="right-banner">
-	<img src="http://cdn.shopify.com/s/files/1/0040/1862/files/Holidays20.jpg?1289331777"/>
-</div>
--->
+<div id="front-collections" style="">
+<img src="http://cdn.shopify.com/s/files/1/0040/1862/files/HomePageHolidays.jpg?1289331786" style="height:350px;width:385px;"/>
 </div>
 
 <br>
 <hr>
+
+<!--
+<img src="http://cdn.shopify.com/s/files/1/0040/1862/files/Holidays20.jpg?1289331777"
+	style="float:left;width:600px; height:350px;"/>
+
+<img src="http://cdn.shopify.com/s/files/1/0040/1862/files/Holidays20.jpg?1289331777"
+	style="float:left; width:385px; height:350px;"/>
+-->
 
 <!--<img src="http://cdn.shopify.com/s/files/1/0040/1862/products/Cintra_Rose_Front_medium.jpg?1292852815" style="border:4px ridge black;"/>
 <img src="http://cdn.shopify.com/s/files/1/0040/1862/products/Ivory7CrystalBracelet_medium.jpg?1292852818" style="border:4px ridge black;"/>
@@ -41,6 +45,7 @@
 <img src="http://cdn.shopify.com/s/files/1/0040/1862/products/lula_medium.jpg?1292852822" style="border:4px ridge black;"/>
 <img src="http://cdn.shopify.com/s/files/1/0040/1862/products/Ivory7CrystalBracelet_medium.jpg?1292852818" style="border:4px ridge black;"/>
 -->
+
 
 <table id="products" cellspacing="0" cellpadding="0">
   {% tablerow product in collections.all.products cols:4 limit:4 %}

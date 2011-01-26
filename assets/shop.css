@@ -27,20 +27,16 @@ Comes in a few different colour variations (see section 8).
 
 ---------------------------------------------------------------------------- */
 
-	div#banner {
-		position:relative;
-		height:350px;
-		width:1000px;
-}
-
 /*index js image rotator*/
 /* rotator in-page placement */
     div#rotator {
 	position:relative;
-        left:0px;
+        left:-40px;
 	height:350px;
 	width:600px;
+	float:left;
 }
+
 /* rotator css */
 	div#rotator ul li {
         float:left;
@@ -52,21 +48,24 @@ Comes in a few different colour variations (see section 8).
 	background: #FFF;
 	width:600px;
 	height:350px;
+	padding-right: 5px;
 }
     div#rotator ul li.show {
 
 }
 
 	div#right-banner {
-		position: relative;
+		float:right;
+		position: absolute;
+		left: 812px;
 		height: 350px;
-		width: 200px;
+		width: 385px;
 }
 	
 	div#right-banner img {
-		float: left;
-		width: 200px;
+		float:left;
 		height: 350px;
+		width: 385px;
 	}
 
 /* 1: BODY AND UNIVERSAL RESET
